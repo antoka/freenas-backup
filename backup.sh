@@ -8,20 +8,19 @@ EXPORT=false
 SOURCE_DATASET=""
 BACKUP_ZPOOL=""
 
-while getopts 'ed:' flag; do
+while getopts ':ed:' flag; do
   case "${flag}" in
-    e) EXPORT=true ;;
-    d) SOURCE_DATASET=$OPTARG;;
-    *) error "Unexpected option ${flag}" ;;
+    e) EXPORT=true
+      ;;
+    d) SOURCE_DATASET=$OPTARG
+      ;;
+    \?) echo "Invalid  option: -$OPTARG"
+      exit 1
+      ;;
+    :) echo "Option -$OPTARG requires an argument."
+      exit 1
   esac
 done
-
-if [ -z "$SOURCE_DATASET" ]
-then
-  echo "no dataset defined."
-  echo "Usage: backup -d name_of_dataset"
-  exit
-fi
 
 zpool import -a
 
