@@ -45,7 +45,7 @@ LAST_SNAPSHOT=`zfs list -t snapshot -o name -s creation | grep ^$BACKUP_ZPOOL/$S
 
 echo "the last snapshot on the backup device: $LAST_SNAPSHOT"
 
-if (zfs list -t snapshot -o name -s creation | grep -q "$SOURCE_ZPOOL/$SOURCE_DATASET@$LAST_SNAPSHOT")
+if [ ! -z "$LAST_SNAPSHOT" ] && [zfs list -t snapshot -o name -s creation | grep -q "$SOURCE_ZPOOL/$SOURCE_DATASET@$LAST_SNAPSHOT"]
 then
   LAST_LIVE_SNAPSHOT=`zfs list -t snapshot -o name -s creation | grep ^$SOURCE_ZPOOL/$SOURCE_DATASET | tail -n 1 | cut -f2 -d'@'`
   echo "the last snapshot on the live device: $LAST_LIVE_SNAPSHOT"
