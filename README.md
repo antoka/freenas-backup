@@ -1,2 +1,2 @@
 # freenas-backup
-A bash script to do incremental backups
+A script to do incremental backups
